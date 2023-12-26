@@ -116,7 +116,7 @@ func main() {
 			fmt.Printf("Error getting key: %v\n", err)
 			os.Exit(2)
 		}
-		fmt.Printf("Key created and retrieved successfully\n")
+		fmt.Printf("Key created and retrieved successfully!\n")
 		os.Exit(0)
 	}
 
