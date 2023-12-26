@@ -240,14 +240,11 @@ func (s *Service) RoundTrip(ctx context.Context, request, response soap.HasFault
 
 	// Every request has a "This" field.
 	this := req.Elem().FieldByName("This")
-	// Copy request body
-	body := reflect.New(req.Type().Elem())
-	deepCopy(req.Interface(), body.Interface())
 
 	method := &Method{
 		Name: req.Elem().Type().Name(),
 		This: this.Interface().(types.ManagedObjectReference),
-		Body: body.Interface(),
+		Body: req.Interface(),
 	}
 
 	res := s.call(&Context{
@@ -350,6 +347,7 @@ func (s *Service) About(w http.ResponseWriter, r *http.Request) {
 
 	for _, sdk := range s.sdk {
 		for _, obj := range sdk.objects {
+			fmt.Println("The object types as " + obj.Reference().Type)
 			kind := obj.Reference().Type
 			if seen[kind] {
 				continue
